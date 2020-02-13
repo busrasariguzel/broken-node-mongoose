@@ -12,7 +12,7 @@ module.exports = {
         req.body.email.length === 0 ||
         req.body.password.length === 0
       ) {
-        return res.json({ message: 'All fields must be completed' });
+        return res.status(400).json({ message: 'All fields must be completed' });
       }
       // check if user exists
       User.findOne({ email: req.body.email }).then(user => {
@@ -30,13 +30,15 @@ module.exports = {
         newUser
           .save()
           .then(user => {
-            res.status(200).json({ message: 'User Created', user });
+            return res.status(200).json({ message: 'User Created', user });
           })
           .catch(err => {
             reject(err);
-          });
-      });
-      resolve();
+          })
+      }).catch(err => {
+        return res.status(500).json({ message: 'Server error', err });
+      })
+      // resolve();
     });
   },
 

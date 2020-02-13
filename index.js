@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoute');
 
 require('dotenv').config();
-
+const port  = process.env.PORT || 8010;
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -18,6 +18,7 @@ mongoose
     console.log('MongoDB Connected');
   })
   .catch(err => console.log(`Mongo Error: ${err}`));
+
 
 app.use(logger('dev'));
 
