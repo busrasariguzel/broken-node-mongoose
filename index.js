@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const logger = require('morgan');
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
-// const User = require('./models/Users');
+const bcrypt = require('bcryptjs');
+const User = require('./models/Users');
 const userRoutes = require('./routes/userRoute');
 
 require('dotenv').config();
@@ -21,7 +21,8 @@ mongoose
 
 
 app.use(logger('dev'));
-
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use('/api/users', userRoutes);
 
 app.listen(port, () => {
